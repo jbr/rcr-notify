@@ -1,6 +1,20 @@
-h1. runcoderun-notifier
+h1. rcr-notify: Growl notification for run>code>run
 
-Description goes here.
+h2. Installation
+
+* Install "Growl":http://growl.info/
+* In the network tab of growl settings, check
+** Listen for incoming notifications AND
+** Allow remote application registration
+* Install the gem: @sudo gem install rcr-notify@
+
+h2. Running
+
+@rcr-notify -u <rcr username>&@
+  
+See @rcr-notify --help@ for more options.
+
+h3. That's it!
 
 h2. Note on Patches/Pull Requests
  
