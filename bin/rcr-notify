@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+require File.instance_eval{expand_path(join(dirname(__FILE__), '..', 'lib', 'runcoderun-notifier'))}
+
+notifier = Runcoderun::Notifier.new
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{$0} [options]"
+  opts.instance_eval do
+    on("-u", "--user USERNAME", "Runcoderun Username") {|u| notifier.settings[:username] = u }
+    on("-i", "--interval INTERVAL", "Polling interval in seconds (default: 30)") do |i|
+      notifier.settings[:interval] = i.to_i
+    end
+    on_tail("--help", "This message") {puts opts; exit}
+  end
+end.parse!
+
+unless notifier.settings[:username]
+  puts "at least username is required.  see --help"
+  exit
+end
+
+loop do
+  notifier.poll
+  sleep notifier.settings[:interval]
+end
