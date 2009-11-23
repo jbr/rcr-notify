@@ -22,7 +22,7 @@ module RcrNotify
 
       if last_projects
         projects.each do |name, this_time|
-          notify_for last_projects[name], this_time
+          notify_for name, last_projects[name], this_time
         end
       end
       
@@ -31,7 +31,7 @@ module RcrNotify
     
     private
     
-    def notify_for(last_time, this_time)
+    def notify_for(name, last_time, this_time)
       return if this_time['commit'] == last_time['commit']
 
       commit_message = "\"#{this_time['commit_message']}\"\n" +
@@ -43,7 +43,7 @@ module RcrNotify
         success?(last_time) ? 'broken' : 'still broken'
       end
       
-      notify title, commit_message, success?(this_time)
+      notify "#{name} build #{title}", commit_message, success?(this_time)
     end
     
     def success?(hash)
