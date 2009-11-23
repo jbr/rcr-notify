@@ -4,14 +4,16 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{runcoderun-notifier}
+  s.name = %q{rcr-notify}
   s.version = "0.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jacob Rothstein"]
   s.date = %q{2009-11-22}
-  s.description = %q{TODO: longer description of your gem}
+  s.default_executable = %q{rcr-notify}
+  s.description = %q{Simple json poller with ruby-growl notification}
   s.email = %q{github@jacobrothstein.com}
+  s.executables = ["rcr-notify"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -23,15 +25,16 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "lib/runcoderun-notifier.rb",
+     "bin/rcr-notify",
+     "rcr-notify.gemspec",
      "test/runcoderun-notifier_test.rb",
      "test/test_helper.rb"
   ]
-  s.homepage = %q{http://github.com/jbr/runcoderun-notifier}
+  s.homepage = %q{http://github.com/jbr/rcr-notify}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{Growl notification for runcoderun builds}
   s.test_files = [
     "test/runcoderun-notifier_test.rb",
      "test/test_helper.rb"
@@ -43,16 +46,13 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<ruby-growl>, [">= 0"])
-      s.add_runtime_dependency(%q<open-uri>, [">= 0"])
       s.add_runtime_dependency(%q<json>, [">= 0"])
     else
       s.add_dependency(%q<ruby-growl>, [">= 0"])
-      s.add_dependency(%q<open-uri>, [">= 0"])
       s.add_dependency(%q<json>, [">= 0"])
     end
   else
     s.add_dependency(%q<ruby-growl>, [">= 0"])
-    s.add_dependency(%q<open-uri>, [">= 0"])
     s.add_dependency(%q<json>, [">= 0"])
   end
 end

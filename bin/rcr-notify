@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
-require File.instance_eval{expand_path(join(dirname(__FILE__), '..', 'lib', 'runcoderun-notifier'))}
+require File.instance_eval{expand_path(join(dirname(__FILE__), '..', 'lib', 'rcr-notify'))}
 
-notifier = Runcoderun::Notifier.new
+notifier = RcrNotify::Notifier.new
 
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [options]"

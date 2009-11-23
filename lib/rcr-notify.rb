@@ -4,12 +4,12 @@ require 'open-uri'
 require 'json'
 require 'yaml'
 
-module Runcoderun
+module RcrNotify
   class Notifier
     attr_reader :settings, :last_projects
     
     def initialize
-      @settings = {}
+      @settings = {:interval => 30}
       @growl = Growl.new "localhost", "run>code>run notifier", %w(success failure)
     end
     
