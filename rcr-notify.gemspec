@@ -5,24 +5,24 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rcr-notify}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jacob Rothstein"]
-  s.date = %q{2009-11-23}
+  s.date = %q{2009-11-30}
   s.default_executable = %q{rcr-notify}
   s.description = %q{Simple json poller with ruby-growl notification}
   s.email = %q{github@jacobrothstein.com}
   s.executables = ["rcr-notify"]
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.rdoc"
+     "README.textile"
   ]
   s.files = [
     ".document",
      ".gitignore",
      "LICENSE",
-     "README.rdoc",
+     "README.textile",
      "Rakefile",
      "VERSION",
      "bin/rcr-notify",
