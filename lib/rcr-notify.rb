@@ -20,7 +20,7 @@ module RcrNotify
         hash.merge project.delete("name") => project
       end
 
-      if last_projects
+      if last_projects && last_time
         projects.each do |name, this_time|
           notify_for name, last_projects[name], this_time
         end
@@ -47,7 +47,7 @@ module RcrNotify
     end
     
     def success?(hash)
-      hash["status"] == "success"
+      hash && hash["status"] == "success"
     end
         
     def url
@@ -56,6 +56,7 @@ module RcrNotify
   
     def notify(title, body, success)
       type = success ? 'success' : 'failure'
+      puts "#{title} (#{type})\n#{body}\n\n"
       @growl.notify type, title, body
     end
   end
