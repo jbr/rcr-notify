@@ -29,7 +29,7 @@ module RcrNotify
       end
       
       @last_projects = projects
-    rescue SocketError
+    rescue
       print 'o'
     end
     
