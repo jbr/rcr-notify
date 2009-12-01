@@ -24,7 +24,7 @@ module RcrNotify
 
       if last_projects
         projects.each do |name, this_time|
-          notify_for name, last_projects[name], this_time
+          notify_for name, last_projects[name], this_time if notify_for? name
         end
       end
       
@@ -35,8 +35,18 @@ module RcrNotify
     
     private
     
+    def notify_for?(name)
+      if settings[:blacklist]
+        !settings[:blacklist].include? name
+      elsif settings[:whitelist]
+        settings[:whitelist].include? name
+      else
+        true
+      end
+    end
+    
     def notify_for(name, last_time, this_time)
-      return if this_time['commit'] == last_time['commit']
+      # return if this_time['commit'] == last_time['commit']
 
       commit_message = "#{this_time['commit_message']}\n" +
                        "\t\t—#{this_time['author_name']}"

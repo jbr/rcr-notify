@@ -8,8 +8,14 @@ OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [options]"
   opts.instance_eval do
     on("-u", "--user USERNAME", "Runcoderun Username") {|u| notifier.settings[:username] = u }
-    on("-i", "--interval INTERVAL", Numeric, "Polling interval in seconds (default: 30)") do |i|
+    on("-i", "--interval INTERVAL", Numeric, "Polling interval in seconds", "  (default: 30)") do |i|
       notifier.settings[:interval] = i
+    end
+    on("-e", "--except x,y,z", Array, "Projects to ignore", "  (mutually exclusive to -o)") do |projects|
+      notifier.settings[:blacklist] = projects
+    end
+    on("-o", "--only a,b,c", Array, "Only notify of these build", "  (mutually exclusive to -e)") do |projects|
+      notifier.settings[:whitelist] = projects
     end
     on_tail("--help", "This message") {puts opts; exit}
   end
@@ -17,7 +23,12 @@ end.parse!
 
 unless notifier.settings[:username]
   puts "at least username is required.  see --help"
-  exit
+  exit -1
+end
+
+if notifier.settings[:whitelist] && notifier.settings[:blacklist]
+  puts "Options --except (-e) and --only (-o) are mutually exclusive.\nSupply one or the other."
+  exit -1
 end
 
 loop do
