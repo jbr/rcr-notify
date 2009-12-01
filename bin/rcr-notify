@@ -2,13 +2,14 @@
 require File.instance_eval{expand_path(join(dirname(__FILE__), '..', 'lib', 'rcr-notify'))}
 
 notifier = RcrNotify::Notifier.new
+STDOUT.sync = true
 
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [options]"
   opts.instance_eval do
     on("-u", "--user USERNAME", "Runcoderun Username") {|u| notifier.settings[:username] = u }
-    on("-i", "--interval INTERVAL", "Polling interval in seconds (default: 30)") do |i|
-      notifier.settings[:interval] = i.to_i
+    on("-i", "--interval INTERVAL", Numeric, "Polling interval in seconds (default: 30)") do |i|
+      notifier.settings[:interval] = i
     end
     on_tail("--help", "This message") {puts opts; exit}
   end
@@ -20,6 +21,11 @@ unless notifier.settings[:username]
 end
 
 loop do
-  notifier.poll
-  sleep notifier.settings[:interval]
+  begin
+    notifier.poll
+    sleep notifier.settings[:interval]
+  rescue Interrupt
+    puts "\nTerminated #{Time.now}"
+    exit
+  end
 end

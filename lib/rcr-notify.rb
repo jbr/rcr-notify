@@ -14,13 +14,14 @@ module RcrNotify
     end
     
     def poll
+      print '.'
       data = JSON::parse open(url).read
       
       projects = data["user"]["projects"].inject({}) do |hash, project|
         hash.merge project.delete("name") => project
       end
 
-      if last_projects && last_time
+      if last_projects
         projects.each do |name, this_time|
           notify_for name, last_projects[name], this_time
         end
@@ -34,7 +35,7 @@ module RcrNotify
     def notify_for(name, last_time, this_time)
       return if this_time['commit'] == last_time['commit']
 
-      commit_message = "\"#{this_time['commit_message']}\"\n" +
+      commit_message = "#{this_time['commit_message']}\n" +
                        "\t\t—#{this_time['author_name']}"
         
       title = if success?(this_time)
@@ -56,7 +57,7 @@ module RcrNotify
   
     def notify(title, body, success)
       type = success ? 'success' : 'failure'
-      puts "#{title} (#{type})\n#{body}\n\n"
+      puts "\n\n#{title} (#{type})\n#{body}\n\n"
       @growl.notify type, title, body
     end
   end
