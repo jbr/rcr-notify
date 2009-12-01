@@ -14,8 +14,9 @@ module RcrNotify
     end
     
     def poll
-      print '.'
       data = JSON::parse open(url).read
+      print '.'
+
       
       projects = data["user"]["projects"].inject({}) do |hash, project|
         hash.merge project.delete("name") => project
@@ -28,6 +29,8 @@ module RcrNotify
       end
       
       @last_projects = projects
+    rescue SocketError
+      print 'o'
     end
     
     private
